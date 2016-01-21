@@ -1,0 +1,41 @@
+[
+  {
+    "name": "text",
+    "type": "text",
+    "label": "Question Text"
+  },
+  {
+    "name": "choices",
+    "type": "list",
+    "label": "Choices",
+    "entity": "choice",
+    "min": 2,
+    "field": {
+      "name": "choice",
+      "type": "group",
+      "fields": [
+        {
+          "name": "text",
+          "type": "text",
+          "label": "Choice Text"
+        },
+        {
+          "name": "goTo",
+          "type": "number",
+          "label": "Go To"
+        },
+        {
+          "name": "ifChosenText",
+          "type": "text",
+          "label": "If Chosen Text",
+          "optional": true
+        }
+      ]
+    }
+  },
+  {
+    "name": "continueButtonLabel",
+    "type": "text",
+    "label": "Continue Button Label"
+  }
+]
