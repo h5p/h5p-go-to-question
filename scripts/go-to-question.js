@@ -1,4 +1,4 @@
-H5P.GoToQuestion = (function ($, EventDispatcher) {
+H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
 
   /**
    * Create a new Go To Question!
@@ -33,32 +33,10 @@ H5P.GoToQuestion = (function ($, EventDispatcher) {
     var $wrapper;
     var $text;
     var $choices;
+    var $chosenText;
+    var $continueMsg;
+    var $continueButton;
     var choices = [];
-
-    // Instantiate our choices
-    for (var i = 0; i < parameters.choices.length; i++) {
-      var choice = parameters.choices[i];
-
-      try {
-        // Try to create new choice
-        choice = new GoToQuestion.Choice(choice.text, choice.goTo, choice.ifChosenText);
-        choices.push(choice);
-      }
-      catch (err) {
-        // Skipping invalid choices
-      }
-
-      if (choice instanceof GoToQuestion.Choice) {
-        // If successful, listen for chosen events
-        choice.on('chosen', function (event) {
-          console.log(event.data);
-          if (event.data.ifChosenText) {
-            // TODO: Show continue button before continuing
-          }
-          self.trigger('chosen', event.data.goTo);
-        });
-      }
-    }
 
     /**
      * Creates the basic HTML elements that are needed to begin with.
@@ -79,15 +57,138 @@ H5P.GoToQuestion = (function ($, EventDispatcher) {
       });
 
       // Create and append choices wrapper
-      $text = $('<ul/>', {
+      $choices = $('<ul/>', {
         'class': GoToQuestion.htmlClass + '-choices',
         appendTo: $wrapper
       });
 
       // Append choices to wrapper
-      for (var i = 0; i < choices.length; i++) {
-        choices[i].appendTo($wrapper);
+      for (var i = 0; i < parameters.choices.length; i++) {
+        createChoice(parameters.choices[i]);
       }
+    };
+
+    /**
+     * Create HTML for choice.
+     *
+     * @private
+     * @param {object} choiceParams
+     * @param {string} choiceParams.text
+     * @param {int} choiceParams.goTo
+     * @param {string} choiceParams.ifChosenText
+     */
+    var createChoice = function (choiceParams) {
+      // Wrapper and list element
+      var $li = $('<li/>', {
+        'class': GoToQuestion.htmlClass + '-choice',
+        appendTo: $choices
+      });
+
+      // The button for choosing
+      $('<div/>', {
+        'class': GoToQuestion.htmlClass + '-button',
+        tabIndex: 0,
+        role: 'button',
+        html: choiceParams.text,
+        on: {
+          click: function () {
+            choose(choiceParams);
+          },
+          keypress: function (event) {
+            if (event.which === 32) {
+              // Space bar pressed
+              choose(choiceParams);
+            }
+          }
+        },
+        appendTo: $li
+      });
+    };
+
+    /**
+     * Choice chosen.
+     *
+     * @private
+     * @param {object} choiceParams
+     * @param {string} choiceParams.text
+     * @param {int} choiceParams.goTo
+     * @param {string} choiceParams.ifChosenText
+     */
+    var choose = function (choiceParams) {
+      if (choiceParams.ifChosenText) {
+        // Show message and continue button before proceeding
+        continueScreen(choiceParams.text, choiceParams.ifChosenText, choiceParams.goTo);
+      }
+      else {
+        // Done
+        self.trigger('chosen', choiceParams.goTo);
+      }
+    };
+
+    /**
+     * Displays the continue message and button.
+     *
+     * @private
+     * @param {string} text
+     * @param {number} goTo
+     */
+    var continueScreen = function (chosenText, continueMsg, goTo) {
+      if ($continueMsg === undefined) {
+        // Add chosen option text
+        $chosenText = $('<div/>', {
+          'class': GoToQuestion.htmlClass + '-chosentext',
+          html: chosenText
+        });
+
+        // Create continune message
+        $continueMsg = $('<div/>', {
+          'class': GoToQuestion.htmlClass + '-continuemsg',
+          html: continueMsg
+        });
+
+        // Create continue button
+        $continueButton = UI.createButton({
+          'class': GoToQuestion.htmlClass + '-continue',
+          html: parameters.continueButtonLabel,
+          title: parameters.continueButtonLabel,
+          on: {
+            click: createContinueHandler(goTo)
+          }
+        });
+      }
+      else {
+        // Update existing continue elements
+        $chosenText.html(chosenText);
+        $continueMsg.html(continueMsg);
+        $continueButton.on('click', createContinueHandler(goTo));
+      }
+
+      // Remove choices
+      $choices.detach();
+
+      // Add continue text and button
+      $chosenText.add($continueMsg).add($continueButton).appendTo($wrapper);
+
+      // Makes it easy to re-style the task in this state
+      $wrapper.addClass(GoToQuestion.htmlClass + '-continuestate');
+    };
+
+    /**
+     * Factory function for generating continue button handlers
+     *
+     * @private
+     * @param {number} goTo
+     */
+    var createContinueHandler = function (goTo) {
+      return function () {
+        self.trigger('chosen', goTo);
+        // Use timeout to avoid flickering
+        setTimeout(function () {
+          $chosenText.add($continueMsg).add($continueButton.off('click')).detach();
+          $choices.appendTo($wrapper);
+          $wrapper.removeClass(GoToQuestion.htmlClass + '-continuestate');
+        }, 1);
+      };
     };
 
     /**
@@ -134,4 +235,4 @@ H5P.GoToQuestion = (function ($, EventDispatcher) {
   };
 
   return GoToQuestion;
-})(H5P.jQuery, H5P.EventDispatcher);
+})(H5P.jQuery, H5P.EventDispatcher, H5P.JoubelUI);
