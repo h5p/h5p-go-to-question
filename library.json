@@ -30,5 +30,12 @@
       "majorVersion": 1,
       "minorVersion": 2
     }
+  ],
+  "editorDependencies": [
+    {
+      "machineName": "H5PEditor.Timecode",
+      "majorVersion": 1,
+      "minorVersion": 0
+    }
   ]
 }

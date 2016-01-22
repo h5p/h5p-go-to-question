@@ -22,7 +22,8 @@
         {
           "name": "goTo",
           "type": "number",
-          "label": "Go To"
+          "label": "Go To",
+          "widget": "timecode"
         },
         {
           "name": "ifChosenText",
@@ -36,6 +37,7 @@
   {
     "name": "continueButtonLabel",
     "type": "text",
-    "label": "Continue Button Label"
+    "label": "Continue Button Label",
+    "common": true
   }
 ]
