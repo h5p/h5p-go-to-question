@@ -89,15 +89,16 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
         'class': GoToQuestion.htmlClass + '-button',
         tabIndex: 0,
         role: 'button',
+        'aria-disabled': false,
         html: choiceParams.text,
         on: {
           click: function () {
-            choose(choiceParams);
+            choose.call(this, choiceParams);
           },
           keypress: function (event) {
             if (event.which === 32) {
               // Space bar pressed
-              choose(choiceParams);
+              choose.call(this, choiceParams);
             }
           }
         },
@@ -115,13 +116,56 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
      * @param {string} choiceParams.ifChosenText
      */
     var choose = function (choiceParams) {
+      var $button = $(this);
+      if ($button.attr('aria-disabled') === 'true') {
+        return; // Prevent choosing another option while animation is running
+      }
+
+      // Disable all buttons
+      var $buttons = $choices.find('.' + GoToQuestion.htmlClass + '-button')
+          .attr('aria-disabled', true);
+
+      // Use parent LI as placeholder
+      var $li = $button.parent();
+      $li.css('height', $li[0].getBoundingClientRect().height);
+
+      // Mark button as chosen and animate
+      var buttonStyle = window.getComputedStyle($button[0]);
+      var borderWidth = parseFloat(buttonStyle.borderTopWidth);
+      $button.addClass(GoToQuestion.htmlClass + '-chosen').css('top', $button[0].offsetTop + borderWidth);
+
+      /**
+       * Resets the choices UI
+       * @private
+       */
+      var resetChoices = function () {
+        $li.css('height', '');
+        $button.removeClass(GoToQuestion.htmlClass + '-chosen').css('top', '');
+        $buttons.attr('aria-disabled', false);
+      };
+
+      // Animate the choice if we're going to have continue screen
       if (choiceParams.ifChosenText) {
-        // Show message and continue button before proceeding
-        continueScreen(choiceParams.text, choiceParams.ifChosenText, choiceParams.goTo);
+        setTimeout(function () {
+          // Start animation
+          buttonStyle = window.getComputedStyle($button[0]);
+          $button.css('top', $text[0].getBoundingClientRect().height - parseFloat(buttonStyle.paddingTop));
+        }, 0);
+
+        // Give some time for the animation to play before we continue
+        setTimeout(function () {
+          // Show message and continue button before proceeding
+          continueScreen(choiceParams.text, choiceParams.ifChosenText, choiceParams.goTo);
+          setTimeout(resetChoices, 0);
+        }, 1000);
       }
       else {
-        // Done
-        self.trigger('chosen', choiceParams.goTo);
+        // No animation, but let the choices stay for a while
+        setTimeout(function () {
+          // Done
+          self.trigger('chosen', choiceParams.goTo);
+          setTimeout(resetChoices, 0);
+        }, 500);
       }
     };
 

@@ -39,6 +39,7 @@
   outline: none;
   overflow: hidden;
   position: relative;
+  transition: top 1s linear;
 }
 .h5p-gotoquestion-button:after {
   position: absolute;
@@ -50,18 +51,32 @@
   left: 0;
   bottom: 0;
 }
-.h5p-gotoquestion-button:hover,
-.h5p-gotoquestion-button:focus {
+.h5p-gotoquestion-button[aria-disabled=false]:hover,
+.h5p-gotoquestion-button[aria-disabled=false]:focus {
   color: #018d82;
 }
-.h5p-gotoquestion-button:hover:after,
-.h5p-gotoquestion-button:focus:after {
+.h5p-gotoquestion-button[aria-disabled=false]:hover:after,
+.h5p-gotoquestion-button[aria-disabled=false]:focus:after {
   border-bottom-color: #018d82;
 }
-.h5p-gotoquestion-button:active {
+.h5p-gotoquestion-button[aria-disabled=false]:active,
+.h5p-gotoquestion-chosen,
+.h5p-gotoquestion-chosen:hover,
+.h5p-gotoquestion-chosen:focus {
   background: #018d82;
   color: #fff;
   border-bottom-color: transparent;
+}
+.h5p-gotoquestion-button[aria-disabled=true] {
+  cursor: default;
+}
+.h5p-gotoquestion-chosen {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  box-sizing: border-box;
+  border-radius: 0;
+  border: 0;
 }
 .h5p-gotoquestion-chosentext {
   background: #018d82;
