@@ -14,9 +14,6 @@
   "preloadedJs": [
     {
       "path": "scripts/go-to-question.js"
-    },
-    {
-      "path": "scripts/choice.js"
     }
   ],
   "preloadedCss": [
