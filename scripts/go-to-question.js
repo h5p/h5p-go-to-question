@@ -13,6 +13,9 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
     // Initialize event inheritance
     EventDispatcher.call(self);
 
+    // Clone parameters so that the parameters doesn't get the default values
+    parameters = $.extend(true, {}, parameters);
+
     // Content defaults
     setDefaults(parameters, {
       text: 'Choose your side',
