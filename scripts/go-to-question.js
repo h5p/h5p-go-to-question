@@ -176,8 +176,9 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
      * Displays the continue message and button.
      *
      * @private
-     * @param {string} text
-     * @param {number} goTo
+     * @param {string} chosenText Text from the chosen option
+     * @param {string} continueMsg Message to display before continue
+     * @param {number} goTo Where to continue
      */
     var continueScreen = function (chosenText, continueMsg, goTo) {
       if ($continueMsg === undefined) {
