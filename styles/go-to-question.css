@@ -39,7 +39,7 @@
   outline: none;
   overflow: hidden;
   position: relative;
-  transition: top 0.2s linear;
+  transition: top 0.25s ease-in-out;
 }
 .h5p-gotoquestion-button:after {
   position: absolute;

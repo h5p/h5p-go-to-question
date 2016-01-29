@@ -160,7 +160,7 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
           // Show message and continue button before proceeding
           continueScreen(choiceParams.text, choiceParams.ifChosenText, choiceParams.goTo);
           setTimeout(resetChoices, 0);
-        }, 200);
+        }, 250);
       }
       else {
         // No animation, but let the choices stay for a while
