@@ -273,13 +273,56 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
     for (var prop in values) {
       if (values.hasOwnProperty(prop)) {
         if (params[prop] === undefined) {
+          // Not set, use default
           params[prop] = values[prop];
         }
-        else if (params[prop] instanceof Object && !(params[prop] instanceof Array)) {
-          setDefaults(params[prop], values[prop]);
+        else if (params[prop] instanceof Object) {
+          if (params[prop] instanceof Array) {
+            if (emptyArray(params[prop])) {
+              // Empty array, use default
+              params[prop] = values[prop];
+            }
+          }
+          else {
+            // Handle object
+            setDefaults(params[prop], values[prop]);
+          }
         }
       }
     }
+  };
+
+  /**
+   * Check to see if the array is empty. Will strip away empty objects inserted
+   * by the editor.
+   *
+   * @param Array arr
+   * @returns boolean
+   */
+  var emptyArray = function (arr) {
+    // Reverse traverse to make removal of objects easier
+    for (var i = arr.length - 1; i > -1; i--) {
+      if (arr[i] instanceof Object && emptyObject(arr[i])) {
+        // Remove empty object
+        arr = arr.splice(i, 1);
+      }
+    }
+    return !!arr.length;
+  };
+
+  /**
+   * Checks to see if object is empty.
+   *
+   * @param Object obj
+   * @returns boolean
+   */
+  var emptyObject = function (obj) {
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(prop)) {
+        return false;
+      }
+    }
+    return true;
   };
 
   return GoToQuestion;
