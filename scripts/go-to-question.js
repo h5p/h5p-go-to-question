@@ -278,8 +278,9 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
         }
         else if (params[prop] instanceof Object) {
           if (params[prop] instanceof Array) {
-            if (emptyArray(params[prop])) {
-              // Empty array, use default
+            // Check if array has valid objects
+            if (!arrayHasObjects(params[prop], Object.keys(values[prop][0]))) {
+              // Empty array, use default options
               params[prop] = values[prop];
             }
           }
@@ -293,35 +294,40 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
   };
 
   /**
-   * Check to see if the array is empty. Will strip away empty objects inserted
-   * by the editor.
+   * Check to see if the array has objects with the required properties.
+   * Will strip away empty objects inserted by the editor.
    *
    * @param Array arr
+   * @param Array objProps
    * @returns boolean
    */
-  var emptyArray = function (arr) {
+  var arrayHasObjects = function (arr, objProps) {
     // Reverse traverse to make removal of objects easier
-    for (var i = arr.length - 1; i > -1; i--) {
-      if (arr[i] instanceof Object && emptyObject(arr[i])) {
-        // Remove empty object
-        arr = arr.splice(i, 1);
+    var i = arr.length;
+    while (i--) {
+      if (arr[i] instanceof Object && !objectHasProps(arr[i], objProps)) {
+        // Missing required object properties, remove from array
+        arr.splice(i, 1);
       }
     }
     return !!arr.length;
   };
 
   /**
-   * Checks to see if object is empty.
+   * Checks to see if object has all the specified props.
    *
    * @param Object obj
+   * @param Array props
    * @returns boolean
    */
-  var emptyObject = function (obj) {
-    for (var prop in obj) {
-      if (obj.hasOwnProperty(prop)) {
+  var objectHasProps = function (obj, props) {
+    for (var i = 0; i < props.length; i++) {
+      if (obj[props[i]] === undefined) {
         return false;
       }
     }
+
+    // Object had all props
     return true;
   };
 
