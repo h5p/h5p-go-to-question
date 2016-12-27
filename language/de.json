@@ -1,0 +1,32 @@
+{
+  "semantics": [
+    {
+      "label": "Text der Frage",
+      "description": "die Frage, auf deren Grundlage der Nutzer eine Entscheidung treffen soll"
+    },
+    {
+      "label": "Möglichkeiten",
+      "entity": "möglichkeit",
+      "field": {
+        "fields": [
+          {
+            "label": "Text der Möglichkeit",
+            "description": "Die Beschriftung, die auf dem Auswahlknopf erscheint."
+          },
+          {
+            "label": "Gehe zu",
+            "description": "Die Zielzeit, zu der der Nutzer nach Klick auf den Auswahlknopf springen soll. Timcode im Format M:SS eingeben."
+          },
+          {
+            "label": "Text bei Auswahl",
+            "description": "Ein optionaler Bestätigungstext, der angezeigt wird, nachdem der Nutzer auf den Auswahlknopf geklickt hat."
+          }
+        ]
+      }
+    },
+    {
+      "label": "Beschriftung für den \"Weiter\"-Button",
+      "default": "Weiter"
+    }
+  ]
+}
