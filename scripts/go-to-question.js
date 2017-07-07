@@ -91,7 +91,7 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
       $('<div/>', {
         'class': GoToQuestion.htmlClass + '-button',
         tabIndex: 0,
-        role: 'link',
+        role: 'button',
         'aria-disabled': false,
         html: choiceParams.text,
         on: {
