@@ -53,8 +53,10 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
       });
 
       // Create and append question text
+      var labelId = getNextId();
       $text = $('<div/>', {
         'class': GoToQuestion.htmlClass + '-text',
+        id: labelId,
         html: parameters.text,
         appendTo: $wrapper
       });
@@ -62,6 +64,8 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
       // Create and append choices wrapper
       $choices = $('<ul/>', {
         'class': GoToQuestion.htmlClass + '-choices',
+        role: 'group',
+        'aria-labelledby': labelId,
         appendTo: $wrapper
       });
 
@@ -69,6 +73,25 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
       for (var i = 0; i < parameters.choices.length; i++) {
         createChoice(parameters.choices[i]);
       }
+
+      // Add chosen option text
+      $chosenText = $('<div/>', {
+        'class': GoToQuestion.htmlClass + '-chosentext'
+      });
+
+      // Create continune message
+      $continueMsg = $('<div/>', {
+        'class': GoToQuestion.htmlClass + '-continuemsg',
+        'aria-live': 'polite',
+        appendTo: $wrapper
+      });
+
+      // Create continue button
+      $continueButton = UI.createButton({
+        'class': GoToQuestion.htmlClass + '-continue',
+        html: parameters.continueButtonLabel,
+        title: parameters.continueButtonLabel
+      });
     };
 
     /**
@@ -102,6 +125,29 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
             if (event.which === 32) {
               // Space bar pressed
               choose.call(this, choiceParams);
+              event.preventDefault();
+            }
+          },
+          keydown: function (event) {
+            var direction;
+            switch (event.which) {
+              case 37:
+              case 38:
+                // Prev
+                direction = 'previousElementSibling';
+                break;
+
+              case 39:
+              case 40:
+                // Next
+                direction = 'nextElementSibling';
+                break;
+            }
+
+            if (direction && this.parentElement[direction]) {
+              // Move focus to prev/next button
+              this.parentElement[direction].firstElementChild.focus();
+              event.preventDefault();
             }
           }
         },
@@ -181,41 +227,14 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
      * @param {number} goTo Where to continue
      */
     var continueScreen = function (chosenText, continueMsg, goTo) {
-      if ($continueMsg === undefined) {
-        // Add chosen option text
-        $chosenText = $('<div/>', {
-          'class': GoToQuestion.htmlClass + '-chosentext',
-          html: chosenText
-        });
-
-        // Create continune message
-        $continueMsg = $('<div/>', {
-          'class': GoToQuestion.htmlClass + '-continuemsg',
-          html: continueMsg
-        });
-
-        // Create continue button
-        $continueButton = UI.createButton({
-          'class': GoToQuestion.htmlClass + '-continue',
-          html: parameters.continueButtonLabel,
-          title: parameters.continueButtonLabel,
-          on: {
-            click: createContinueHandler(goTo)
-          }
-        });
-      }
-      else {
-        // Update existing continue elements
-        $chosenText.html(chosenText);
-        $continueMsg.html(continueMsg);
-        $continueButton.on('click', createContinueHandler(goTo));
-      }
 
       // Remove choices
       $choices.detach();
 
-      // Add continue text and button
-      $chosenText.add($continueMsg).add($continueButton).appendTo($wrapper);
+      // Update elements
+      $chosenText.html(chosenText).insertBefore($continueMsg);
+      $continueMsg.html(continueMsg);
+      $continueButton.appendTo($wrapper).on('click', createContinueHandler(goTo)).focus();
 
       // Makes it easy to re-style the task in this state
       $wrapper.addClass(GoToQuestion.htmlClass + '-continuestate');
@@ -232,8 +251,10 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
         self.trigger('chosen', goTo);
         // Use timeout to avoid flickering
         setTimeout(function () {
-          $chosenText.add($continueMsg).add($continueButton.off('click')).detach();
-          $choices.appendTo($wrapper);
+          $continueButton.off('click').add($chosenText).detach();
+          $continueMsg.html('');
+
+          $choices.insertBefore($continueMsg);
           $wrapper.removeClass(GoToQuestion.htmlClass + '-continuestate');
         }, 1);
       };
@@ -261,6 +282,16 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
 
   // Set static html class base
   GoToQuestion.htmlClass = 'h5p-gotoquestion';
+
+  // Counter for creating unique IDs
+  var id = 0;
+
+  /**
+   * Generate unique page IDs
+   */
+  var getNextId = function () {
+    return GoToQuestion.htmlClass + '-' + (id++);
+  };
 
   /**
    * Simple recusive function the helps set default values without
