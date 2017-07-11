@@ -71,7 +71,7 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
 
       // Append choices to wrapper
       for (var i = 0; i < parameters.choices.length; i++) {
-        createChoice(parameters.choices[i]);
+        createChoice(parameters.choices[i], i === 0);
       }
 
       // Add chosen option text
@@ -102,8 +102,9 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
      * @param {string} choiceParams.text
      * @param {int} choiceParams.goTo
      * @param {string} choiceParams.ifChosenText
+     * @param {number} isFirst
      */
-    var createChoice = function (choiceParams) {
+    var createChoice = function (choiceParams, isFirst) {
       // Wrapper and list element
       var $li = $('<li/>', {
         'class': GoToQuestion.htmlClass + '-choice',
@@ -111,9 +112,8 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
       });
 
       // The button for choosing
-      $('<div/>', {
+      var $button = $('<div/>', {
         'class': GoToQuestion.htmlClass + '-button',
-        tabIndex: 0,
         role: 'button',
         'aria-disabled': false,
         html: choiceParams.text,
@@ -146,13 +146,19 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
 
             if (direction && this.parentElement[direction]) {
               // Move focus to prev/next button
-              this.parentElement[direction].firstElementChild.focus();
+              var button = this.parentElement[direction].firstElementChild;
+              button.setAttribute('tabindex', '0');
+              button.focus();
+              this.removeAttribute('tabindex');
               event.preventDefault();
             }
           }
         },
         appendTo: $li
       });
+      if (isFirst) {
+        $button.attr('tabindex', '0');
+      }
     };
 
     /**
