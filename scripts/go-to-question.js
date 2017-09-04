@@ -1,4 +1,10 @@
 H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
+  var KEY_CODE_ENTER = 13;
+  var KEY_CODE_SPACE = 32;
+  var KEY_CODE_LEFT = 37;
+  var KEY_CODE_UP = 38;
+  var KEY_CODE_RIGHT = 39;
+  var KEY_CODE_DOWN = 40;
 
   /**
    * Create a new Go To Question!
@@ -22,11 +28,11 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
       choices: [
         {
           text: "Dark side",
-          goTo: 1,
+          goTo: 1
         },
         {
           text: "Light side",
-          goTo: 0,
+          goTo: 0
         }
       ],
       continueButtonLabel: 'Continue'
@@ -53,8 +59,10 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
       });
 
       // Create and append question text
+      var labelId = getNextId();
       $text = $('<div/>', {
         'class': GoToQuestion.htmlClass + '-text',
+        id: labelId,
         html: parameters.text,
         appendTo: $wrapper
       });
@@ -62,13 +70,34 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
       // Create and append choices wrapper
       $choices = $('<ul/>', {
         'class': GoToQuestion.htmlClass + '-choices',
+        role: 'group',
+        'aria-labelledby': labelId,
         appendTo: $wrapper
       });
 
       // Append choices to wrapper
       for (var i = 0; i < parameters.choices.length; i++) {
-        createChoice(parameters.choices[i]);
+        createChoice(parameters.choices[i], i === 0);
       }
+
+      // Add chosen option text
+      $chosenText = $('<div/>', {
+        'class': GoToQuestion.htmlClass + '-chosentext'
+      });
+
+      // Create continune message
+      $continueMsg = $('<div/>', {
+        'class': GoToQuestion.htmlClass + '-continuemsg',
+        'aria-live': 'polite',
+        appendTo: $wrapper
+      });
+
+      // Create continue button
+      $continueButton = UI.createButton({
+        'class': GoToQuestion.htmlClass + '-continue',
+        html: parameters.continueButtonLabel,
+        title: parameters.continueButtonLabel
+      });
     };
 
     /**
@@ -79,8 +108,9 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
      * @param {string} choiceParams.text
      * @param {int} choiceParams.goTo
      * @param {string} choiceParams.ifChosenText
+     * @param {number} isFirst
      */
-    var createChoice = function (choiceParams) {
+    var createChoice = function (choiceParams, isFirst) {
       // Wrapper and list element
       var $li = $('<li/>', {
         'class': GoToQuestion.htmlClass + '-choice',
@@ -88,9 +118,8 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
       });
 
       // The button for choosing
-      $('<div/>', {
+      var $button = $('<div/>', {
         'class': GoToQuestion.htmlClass + '-button',
-        tabIndex: 0,
         role: 'button',
         'aria-disabled': false,
         html: choiceParams.text,
@@ -99,14 +128,43 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
             choose.call(this, choiceParams);
           },
           keypress: function (event) {
-            if (event.which === 32) {
+            if (event.which === KEY_CODE_ENTER || event.which === KEY_CODE_SPACE) {
               // Space bar pressed
               choose.call(this, choiceParams);
+              event.preventDefault();
+            }
+          },
+          keydown: function (event) {
+            var direction;
+            switch (event.which) {
+              case KEY_CODE_LEFT:
+              case KEY_CODE_UP:
+                // Prev
+                direction = 'previousElementSibling';
+                break;
+
+              case KEY_CODE_RIGHT:
+              case KEY_CODE_DOWN:
+                // Next
+                direction = 'nextElementSibling';
+                break;
+            }
+
+            if (direction && this.parentElement[direction]) {
+              // Move focus to prev/next button
+              var button = this.parentElement[direction].firstElementChild;
+              button.setAttribute('tabindex', '0');
+              button.focus();
+              this.removeAttribute('tabindex');
+              event.preventDefault();
             }
           }
         },
         appendTo: $li
       });
+      if (isFirst) {
+        $button.attr('tabindex', '0');
+      }
     };
 
     /**
@@ -181,41 +239,14 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
      * @param {number} goTo Where to continue
      */
     var continueScreen = function (chosenText, continueMsg, goTo) {
-      if ($continueMsg === undefined) {
-        // Add chosen option text
-        $chosenText = $('<div/>', {
-          'class': GoToQuestion.htmlClass + '-chosentext',
-          html: chosenText
-        });
-
-        // Create continune message
-        $continueMsg = $('<div/>', {
-          'class': GoToQuestion.htmlClass + '-continuemsg',
-          html: continueMsg
-        });
-
-        // Create continue button
-        $continueButton = UI.createButton({
-          'class': GoToQuestion.htmlClass + '-continue',
-          html: parameters.continueButtonLabel,
-          title: parameters.continueButtonLabel,
-          on: {
-            click: createContinueHandler(goTo)
-          }
-        });
-      }
-      else {
-        // Update existing continue elements
-        $chosenText.html(chosenText);
-        $continueMsg.html(continueMsg);
-        $continueButton.on('click', createContinueHandler(goTo));
-      }
 
       // Remove choices
       $choices.detach();
 
-      // Add continue text and button
-      $chosenText.add($continueMsg).add($continueButton).appendTo($wrapper);
+      // Update elements
+      $chosenText.html(chosenText).insertBefore($continueMsg);
+      $continueMsg.html(continueMsg);
+      $continueButton.appendTo($wrapper).on('click', createContinueHandler(goTo)).focus();
 
       // Makes it easy to re-style the task in this state
       $wrapper.addClass(GoToQuestion.htmlClass + '-continuestate');
@@ -232,8 +263,10 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
         self.trigger('chosen', goTo);
         // Use timeout to avoid flickering
         setTimeout(function () {
-          $chosenText.add($continueMsg).add($continueButton.off('click')).detach();
-          $choices.appendTo($wrapper);
+          $continueButton.off('click').add($chosenText).detach();
+          $continueMsg.html('');
+
+          $choices.insertBefore($continueMsg);
           $wrapper.removeClass(GoToQuestion.htmlClass + '-continuestate');
         }, 1);
       };
@@ -261,6 +294,16 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
 
   // Set static html class base
   GoToQuestion.htmlClass = 'h5p-gotoquestion';
+
+  // Counter for creating unique IDs
+  var id = 0;
+
+  /**
+   * Generate unique page IDs
+   */
+  var getNextId = function () {
+    return GoToQuestion.htmlClass + '-' + (id++);
+  };
 
   /**
    * Simple recusive function the helps set default values without
