@@ -45,7 +45,6 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
     var $chosenText;
     var $continueMsg;
     var $continueButton;
-    var choices = [];
 
     /**
      * Creates the basic HTML elements that are needed to begin with.
