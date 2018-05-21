@@ -1,0 +1,32 @@
+{
+  "semantics": [
+    {
+      "label": "نص السؤال",
+      "description": "السؤال الذي سيختار المستخدم على اساسه"
+    },
+    {
+      "label": "خيارات ",
+      "entity": "choice",
+      "field": {
+        "fields": [
+          {
+            "label": "نص الاختيار",
+            "description": "التسمية التي سيتم عرضها على زر الاختيار."
+          },
+          {
+            "label": "اذهب إلى",
+            "description": "The target time the user will be taken to upon pressing the choice button. Enter timecode in the format M:SS."
+          },
+          {
+            "label": "إذا اخترت النص",
+            "description": "An optional confirmation text that will be displayed after the user has pressed the choice button."
+          }
+        ]
+      }
+    },
+    {
+      "label": "تسمية زر المتابعة",
+      "default": "Continue"
+    }
+  ]
+}
