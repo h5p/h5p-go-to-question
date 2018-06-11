@@ -8,7 +8,6 @@
       "label": "Choix",
       "entity": "Choix",
       "field": {
-        "label": "Choix",
         "fields": [
           {
             "label": "Intitulé du choix",
