@@ -19,7 +19,7 @@
           },
           {
             "label": "إذا اخترت النص",
-            "description": "An optional confirmation text that will be displayed after the user has pressed the choice button."
+            "description": "نص التأكيد الاختياري الذي سيتم عرضه بعد أن يقوم المستخدم بالضغط على زر الاختيار."
           }
         ]
       }
