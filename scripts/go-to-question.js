@@ -183,7 +183,7 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
 
       // Disable all buttons
       var $buttons = $choices.find('.' + GoToQuestion.htmlClass + '-button')
-          .attr('aria-disabled', true);
+        .attr('aria-disabled', true);
 
       // Use parent LI as placeholder
       var $li = $button.parent();
