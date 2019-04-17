@@ -1,32 +1,32 @@
 {
   "semantics": [
     {
-      "label": "Question Text",
-      "description": "The question that the user will make a choice based upon."
+      "label": "Küsimuse tekst",
+      "description": "Küsimus, mille põhjal teeb kasutaja valiku."
     },
     {
-      "label": "Choices",
-      "entity": "choice",
+      "label": "Valikud",
+      "entity": "valik",
       "field": {
         "fields": [
           {
-            "label": "Choice Text",
-            "description": "The label that will displayed on the choice button."
+            "label": "Valiku tekst",
+            "description": "Silt, mida näidatakse valiku nupul."
           },
           {
-            "label": "Go To",
-            "description": "The target time the user will be taken to upon pressing the choice button. Enter timecode in the format M:SS."
+            "label": "Mine",
+            "description": "The target time the user will be taken to upon pressing the choice button. Sisesta ajakood formaadis M:SS."
           },
           {
-            "label": "If Chosen Text",
-            "description": "An optional confirmation text that will be displayed after the user has pressed the choice button."
+            "label": "Kui valitud tekst",
+            "description": "Valikuline kinnitav tekst, mida näidatakse siis, kui kasutaja on vajutanud Valik-nuppu."
           }
         ]
       }
     },
     {
-      "label": "Continue Button Label",
-      "default": "Continue"
+      "label": "Jätka nupu silt",
+      "default": "Jätka"
     }
   ]
 }
