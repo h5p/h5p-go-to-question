@@ -1,32 +1,32 @@
 {
   "semantics": [
     {
-      "label": "Question Text",
-      "description": "The question that the user will make a choice based upon."
+      "label": "Текст вопроса",
+      "description": "Вопрос о том, что пользователь сделает выбор на основе."
     },
     {
-      "label": "Choices",
-      "entity": "choice",
+      "label": "Выбор",
+      "entity": "выбор",
       "field": {
         "fields": [
           {
-            "label": "Choice Text",
-            "description": "The label that will displayed on the choice button."
+            "label": "Текст выбора",
+            "description": "Надпись, которая будет отображаться на кнопке выбора."
           },
           {
-            "label": "Go To",
-            "description": "The target time the user will be taken to upon pressing the choice button. Enter timecode in the format M:SS."
+            "label": "Перейти к",
+            "description": "Целевое время, на которое пользователь будет направлен после нажатия кнопки выбора. Введите таймкод в формате M:SS."
           },
           {
-            "label": "If Chosen Text",
-            "description": "An optional confirmation text that will be displayed after the user has pressed the choice button."
+            "label": "Если выбран текст",
+            "description": "Дополнительный текст подтверждения, который будет отображаться после нажатия пользователем кнопки выбора."
           }
         ]
       }
     },
     {
-      "label": "Continue Button Label",
-      "default": "Continue"
+      "label": "Надпись кнопки продолжения",
+      "default": "Продолжить"
     }
   ]
 }
