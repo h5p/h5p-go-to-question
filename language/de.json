@@ -1,32 +1,32 @@
 {
   "semantics": [
     {
-      "label": "Question Text",
-      "description": "The question that the user will make a choice based upon."
+      "label": "Fragetext",
+      "description": "Die Frage, zu der der Nutzer eine Entscheidung trifft."
     },
     {
-      "label": "Choices",
-      "entity": "choice",
+      "label": "Wahlmöglichkeiten",
+      "entity": "Wahlmöglichkeit",
       "field": {
         "fields": [
           {
-            "label": "Choice Text",
-            "description": "The label that will displayed on the choice button."
+            "label": "Text",
+            "description": "Die Beschriftung, die auf dem Button angezeigt wird."
           },
           {
-            "label": "Go To",
-            "description": "The target time the user will be taken to upon pressing the choice button. Enter timecode in the format M:SS."
+            "label": "Gehe zu",
+            "description": "Die Stelle, zu der das Video springt, wenn der Nutzer den Button drückt. Die Zeitangabe muss im Format M:SS sein."
           },
           {
-            "label": "If Chosen Text",
-            "description": "An optional confirmation text that will be displayed after the user has pressed the choice button."
+            "label": "Bestätigungstext",
+            "description": "Ein optionaler Text, der angezeigt wird, nachdem der Nutzer auf diese Wahlmöglichkeit geklickt hat."
           }
         ]
       }
     },
     {
-      "label": "Continue Button Label",
-      "default": "Continue"
+      "label": "Beschriftung des \"Weiter\"-Buttons",
+      "default": "Weiter"
     }
   ]
 }
