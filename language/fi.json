@@ -1,32 +1,32 @@
 {
   "semantics": [
     {
-      "label": "Question Text",
-      "description": "The question that the user will make a choice based upon."
+      "label": "Kysymysteksti",
+      "description": "Kysymys jonka pohjalta käyttäjä tekee valinnan"
     },
     {
-      "label": "Choices",
-      "entity": "choice",
+      "label": "Valinnat",
+      "entity": "Valinta",
       "field": {
         "fields": [
           {
-            "label": "Choice Text",
-            "description": "The label that will displayed on the choice button."
+            "label": "Valinnan teksti",
+            "description": "Tämä teksti esitetään valintapainikkeessa"
           },
           {
-            "label": "Go To",
-            "description": "The target time the user will be taken to upon pressing the choice button. Enter timecode in the format M:SS."
+            "label": "Siirry",
+            "description": "Siirtää käyttäjän tiettyyn kohtaan aikajanalla kun hän painaa valintapainiketta. Syötä aikakoodi muodossa M:SS."
           },
           {
-            "label": "If Chosen Text",
-            "description": "An optional confirmation text that will be displayed after the user has pressed the choice button."
+            "label": "Jos valittu teksti",
+            "description": "Vapaaahetoinen teksti joka näytetään sen jälkeen kun käyttäjä on painanut valintapainiketta."
           }
         ]
       }
     },
     {
-      "label": "Continue Button Label",
-      "default": "Continue"
+      "label": "Jatka painikkeen teksti",
+      "default": "Jatka"
     }
   ]
 }
