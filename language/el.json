@@ -1,32 +1,32 @@
 {
-  "semantics": [
+  "semantics":[
     {
-      "label": "Question Text",
-      "description": "The question that the user will make a choice based upon."
+      "label":"Κείμενο ερώτησης",
+      "description":"Η ερώτηση της οποίας την απάντηση θα κληθεί να επιλέξει ο χρήστης."
     },
     {
-      "label": "Choices",
-      "entity": "choice",
-      "field": {
-        "fields": [
+      "label":"Επιλογές",
+      "entity":"επιλογης",
+      "field":{
+        "fields":[
           {
-            "label": "Choice Text",
-            "description": "The label that will displayed on the choice button."
+            "label":"Κείμενο επιλογής",
+            "description":"Η ετικέτα που θα εμφανίζεται πάνω στο κουμπί επιλογής."
           },
           {
-            "label": "Go To",
-            "description": "The target time the user will be taken to upon pressing the choice button. Enter timecode in the format M:SS."
+            "label":"Μετάβαση σε",
+            "description":"Η χρονική στιγμή στην οποία θα μεταφερθεί ο χρήστης μετά το πάτημα του κουμπιού επιλογής. Εισάγετε κωδικοποίηση ώρας σε μορφή M:SS (λεπτά:δευετερόλεπτα)."
           },
           {
-            "label": "If Chosen Text",
-            "description": "An optional confirmation text that will be displayed after the user has pressed the choice button."
+            "label":"Κείμενο σε περίπτωση επιλογής",
+            "description":"Ένα προαιρετικό κείμενο επιβεβαίωσης που θα εμφανιστεί αφού ο χρήστης πατήσει το κουμπί επιλογής."
           }
         ]
       }
     },
     {
-      "label": "Continue Button Label",
-      "default": "Continue"
+      "label":"Ετικέτα κουμπιού \"Συνέχεια\"",
+      "default":"Συνέχεια"
     }
   ]
 }
