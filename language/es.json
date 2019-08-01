@@ -1,32 +1,32 @@
 {
   "semantics": [
     {
-      "label": "Question Text",
-      "description": "The question that the user will make a choice based upon."
+      "label": "Texto de pregunta",
+      "description": "La pregunta sobre de la cual el usuario hará una elección."
     },
     {
-      "label": "Choices",
-      "entity": "choice",
+      "label": "Opciones",
+      "entity": "opción",
       "field": {
         "fields": [
           {
-            "label": "Choice Text",
-            "description": "The label that will displayed on the choice button."
+            "label": "Texto de la opción",
+            "description": "La etiqueta que se mostrará en el botón de la opción."
           },
           {
-            "label": "Go To",
-            "description": "The target time the user will be taken to upon pressing the choice button. Enter timecode in the format M:SS."
+            "label": "Ir a",
+            "description": "El tiempo meta en el cual el usuario será llevado al apretar el botón de la opción. Ingresar código de tiempo enel formato M:SS."
           },
           {
-            "label": "If Chosen Text",
-            "description": "An optional confirmation text that will be displayed after the user has pressed the choice button."
+            "label": "Texto Si Elegido",
+            "description": "Un texto opcional de confirmación que será mostrado después de que el usuario haya apretadoel botón de la opción."
           }
         ]
       }
     },
     {
-      "label": "Continue Button Label",
-      "default": "Continue"
+      "label": "Etiqueta de botón continuar",
+      "default": "Continuar"
     }
   ]
 }
