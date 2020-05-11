@@ -1,32 +1,32 @@
 {
   "semantics": [
     {
-      "label": "Question Text",
-      "description": "The question that the user will make a choice based upon."
+      "label": "Frågetext",
+      "description": "Den fråga som användaren ska besvara med ett svarsalternativ."
     },
     {
-      "label": "Choices",
-      "entity": "choice",
+      "label": "Alternativ",
+      "entity": "alternativ",
       "field": {
         "fields": [
           {
-            "label": "Choice Text",
-            "description": "The label that will displayed on the choice button."
+            "label": "Alternativ",
+            "description": "Etiketten som kommer att visas på alternativ-knappen."
           },
           {
-            "label": "Go To",
-            "description": "The target time the user will be taken to upon pressing the choice button. Enter timecode in the format M:SS."
+            "label": "Gå till",
+            "description": "Tidskoden som användaren kommer att flyttas till när knappen används. Tidskoden måste vara i formatet M:SS."
           },
           {
-            "label": "If Chosen Text",
-            "description": "An optional confirmation text that will be displayed after the user has pressed the choice button."
+            "label": "Om valt-text",
+            "description": "En valfri bekräftelsetext som visas när användaren valt ett svarsalternativ."
           }
         ]
       }
     },
     {
-      "label": "Continue Button Label",
-      "default": "Continue"
+      "label": "Text på fortsätt-knapp",
+      "default": "Fortsätt"
     }
   ]
 }
