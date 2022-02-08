@@ -2,7 +2,7 @@
   "semantics": [
     {
       "label": "Vraagtekst",
-      "description": "De vraag waarmee de gebruiker een keuze moet maken."
+      "description": "De vraag waarop de gebruiker een antwoord moet geven."
     },
     {
       "label": "Keuzes",
@@ -25,7 +25,7 @@
       }
     },
     {
-      "label": "Doorgaan-knoplabel",
+      "label": "Label van \"Doorgaan\"-knop",
       "default": "Doorgaan"
     }
   ]
