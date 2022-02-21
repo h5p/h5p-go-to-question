@@ -15,7 +15,7 @@
           },
           {
             "label": "Ga naar",
-            "description": "Het doeltijdstip waar naartoe de gebruiker wordt gebracht wanneer op de keuze-knop wordt geklikt. Voer tijdcode in, in de opmaak M:SS."
+            "description": "Het doeltijdstip waar naartoe de gebruiker wordt gebracht wanneer op de keuze-knop wordt geklikt. Voer tijdcode in de M:SS-opmaak in."
           },
           {
             "label": "Indien gekozen tekst",
