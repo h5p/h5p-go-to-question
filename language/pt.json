@@ -19,7 +19,7 @@
           },
           {
             "label": "Texto de confirmação da opção",
-            "description": "Opcional. Texto de confirmação oque será mostrado após o utilizador ter clicado o botão da opção."
+            "description": "Opcional. Texto de confirmação que será mostrado após o utilizador ter clicado o botão da opção."
           }
         ]
       }
