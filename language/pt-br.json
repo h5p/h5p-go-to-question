@@ -6,12 +6,12 @@
     },
     {
       "label": "Opções",
-      "entity": "choice",
+      "entity": "opção",
       "field": {
         "fields": [
           {
-            "label": "Texto da opção",
-            "description": "O rótulo exibido no botão da opção."
+            "label": "Texto da Opção",
+            "description": "O rótulo que será exibido no botão Opção."
           },
           {
             "label": "Ir para",
@@ -25,7 +25,7 @@
       }
     },
     {
-      "label": "Rótulo do botão de continuar",
+      "label": "Rótulo do botão Continuar",
       "default": "Continuar"
     }
   ]
