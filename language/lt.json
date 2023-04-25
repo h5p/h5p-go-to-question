@@ -13,7 +13,7 @@
             "label": "Pasirinkimo tekstas"
           },
           {
-            "description": "The target time the user will be taken to upon pressing the choice button. Enter timecode in the format M:SS.",
+            "description": "Tikslo pasiekimo laikas, kuris vartotojui prasidės, kai paspaus pasirinkimo mygtuką. Įveskite laiko kodą formatu M:SS.",
             "label": "Eiti į"
           },
           {
