@@ -17,16 +17,16 @@
             "label": "Eiti į"
           },
           {
-            "description": "An optional confirmation text that will be displayed after the user has pressed the choice button.",
-            "label": "If Chosen Text"
+            "description": "Neprivalomas patvirtinimo tekstas, kuris bus atvaizduojamas kai naudotojas paspaus pasirinkimo mygtuką.",
+            "label": "Jei pasirinktas tekstas"
           }
         ]
       },
       "label": "Pasirinkimai"
     },
     {
-      "default": "Continue",
-      "label": "Continue Button Label"
+      "default": "Tęsti",
+      "label": "Mygto \"Tęsti\" tekstas"
     }
   ]
 }
