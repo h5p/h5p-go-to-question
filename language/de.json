@@ -2,7 +2,7 @@
   "semantics": [
     {
       "label": "Fragetext",
-      "description": "Die Frage, zu der der Nutzer eine Entscheidung trifft."
+      "description": "Die Frage, zu der die Nutzenden eine Entscheidung treffen."
     },
     {
       "label": "Wahlmöglichkeiten",
