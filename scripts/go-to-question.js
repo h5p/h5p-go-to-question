@@ -94,8 +94,7 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
       // Create continue button
       $continueButton = UI.createButton({
         'class': GoToQuestion.htmlClass + '-continue',
-        html: parameters.continueButtonLabel,
-        title: parameters.continueButtonLabel
+        html: parameters.continueButtonLabel
       });
     };
 
