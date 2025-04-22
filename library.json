@@ -27,9 +27,9 @@
   ],
   "preloadedDependencies": [
     {
-      "machineName": "H5P.JoubelUI",
+      "machineName": "H5P.Components",
       "majorVersion": 1,
-      "minorVersion": 3
+      "minorVersion": 0
     }
   ],
   "editorDependencies": [
