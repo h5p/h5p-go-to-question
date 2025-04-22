@@ -54,7 +54,7 @@ H5P.GoToQuestion = (function ($, EventDispatcher) {
     var createHtml = function () {
       // Create question wrapper
       $wrapper = $('<div/>', {
-        'class': GoToQuestion.htmlClass + '-wrapper'
+        'class': GoToQuestion.htmlClass + '-wrapper h5p-theme'
       });
 
       // Create and append question text
