@@ -1,4 +1,4 @@
-H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
+H5P.GoToQuestion = (function ($, EventDispatcher) {
   var KEY_CODE_ENTER = 13;
   var KEY_CODE_SPACE = 32;
   var KEY_CODE_LEFT = 37;
@@ -44,7 +44,7 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
     var $choices;
     var $chosenText;
     var $continueMsg;
-    var $continueButton;
+    var continueButton;
 
     /**
      * Creates the basic HTML elements that are needed to begin with.
@@ -54,7 +54,7 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
     var createHtml = function () {
       // Create question wrapper
       $wrapper = $('<div/>', {
-        'class': GoToQuestion.htmlClass + '-wrapper'
+        'class': GoToQuestion.htmlClass + '-wrapper h5p-theme'
       });
 
       // Create and append question text
@@ -92,10 +92,9 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
       });
 
       // Create continue button
-      $continueButton = UI.createButton({
-        'class': GoToQuestion.htmlClass + '-continue',
-        html: parameters.continueButtonLabel,
-        title: parameters.continueButtonLabel
+      continueButton = H5P.Components.Button({
+        label: parameters.continueButtonLabel,
+        classes: GoToQuestion.htmlClass + '-continue',
       });
     };
 
@@ -245,7 +244,9 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
       // Update elements
       $chosenText.html(chosenText).insertBefore($continueMsg);
       $continueMsg.html(continueMsg);
-      $continueButton.appendTo($wrapper).on('click', createContinueHandler(goTo)).focus();
+      $wrapper[0].append(continueButton);
+      continueButton.addEventListener('click', createContinueHandler(goTo));
+      continueButton.focus();
 
       // Makes it easy to re-style the task in this state
       $wrapper.addClass(GoToQuestion.htmlClass + '-continuestate');
@@ -262,7 +263,9 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
         self.trigger('chosen', goTo);
         // Use timeout to avoid flickering
         setTimeout(function () {
-          $continueButton.off('click').add($chosenText).detach();
+          continueButton.removeEventListener('click', createContinueHandler(goTo));
+          continueButton.parentElement?.removeChild(continueButton);
+
           $continueMsg.html('');
 
           $choices.insertBefore($continueMsg);
@@ -374,4 +377,4 @@ H5P.GoToQuestion = (function ($, EventDispatcher, UI) {
   };
 
   return GoToQuestion;
-})(H5P.jQuery, H5P.EventDispatcher, H5P.JoubelUI);
+})(H5P.jQuery, H5P.EventDispatcher);
