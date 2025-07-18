@@ -1,32 +1,32 @@
 {
   "semantics": [
     {
-      "label": "Question Text",
-      "description": "The question that the user will make a choice based upon."
+      "label": "Textul întrebării",
+      "description": "Întrebarea pe baza căreia utilizatorul va face o alegere."
     },
     {
-      "label": "Choices",
-      "entity": "choice",
+      "label": "Opțiuni",
+      "entity": "opțiune",
       "field": {
         "fields": [
           {
-            "label": "Choice Text",
-            "description": "The label that will displayed on the choice button."
+            "label": "Textul opțiunii",
+            "description": "Eticheta care va fi afișată pe butonul opțiunii."
           },
           {
-            "label": "Go To",
-            "description": "The target time the user will be taken to upon pressing the choice button. Enter timecode in the format M:SS."
+            "label": "Mergi la",
+            "description": "Momentul țintă la care va fi dus utilizatorul după apăsarea butonului de opțiune. Introduceți codul de timp în formatul M:SS."
           },
           {
-            "label": "If Chosen Text",
-            "description": "An optional confirmation text that will be displayed after the user has pressed the choice button."
+            "label": "Text dacă este aleasă",
+            "description": "Un text de confirmare opțional care va fi afișat după ce utilizatorul a apăsat butonul de opțiune."
           }
         ]
       }
     },
     {
-      "label": "Continue Button Label",
-      "default": "Continue"
+      "label": "Etichetă buton Continuă",
+      "default": "Continuă"
     }
   ]
 }
