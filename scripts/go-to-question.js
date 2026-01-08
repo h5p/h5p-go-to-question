@@ -94,6 +94,7 @@ H5P.GoToQuestion = (function ($, EventDispatcher) {
       // Create continue button
       continueButton = H5P.Components.Button({
         label: parameters.continueButtonLabel,
+        icon: 'continue',
         classes: GoToQuestion.htmlClass + '-continue',
       });
     };

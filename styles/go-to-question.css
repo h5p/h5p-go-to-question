@@ -5,6 +5,7 @@
 .h5p-gotoquestion-wrapper {
   height: 100%;
   background: #f5f5f5;
+  text-align: center;
 }
 .h5p-gotoquestion-wrapper.h5p-gotoquestion-continuestate {
   background: #fff;
@@ -81,18 +82,12 @@
 .h5p-gotoquestion-chosentext {
   background: #018d82;
   color: #fff;
-  text-align: center;
   padding: 0 0 0.5em;
 }
 .h5p-gotoquestion-continuemsg {
   color: #007adf;
-  text-align: center;
   padding: 0.5em;
 }
 .h5p-gotoquestion .h5p-gotoquestion-continue {
   margin: 0 auto 0.5em;
-  display: block;
-}
-.h5p-gotoquestion-continue:before {
-  content: "\f04b";
 }
